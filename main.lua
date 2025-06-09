@@ -22,6 +22,13 @@ function love.load()
     }
     gStateMachine:change('play')
 
+    gSounds = {
+        ['hover'] = love.audio.newSource('sounds/hover.mp3', 'static'),
+        ['assign'] = love.audio.newSource('sounds/assign.mp3', 'static'),
+        ['flag'] = love.audio.newSource('sounds/flag.mp3', 'static'),
+        ['treasure'] = love.audio.newSource('sounds/treasure.mp3', 'static')
+    }
+
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
 end

@@ -75,6 +75,7 @@ function Grid:uhoh()
             self.tiles[i][j].revealed = true
         end
     end
+    gSounds['treasure']:play()
 end
 
 function Grid:revealTile()
@@ -95,6 +96,7 @@ function Grid:revealTile()
                 end
             end
         end
+        gSounds['assign']:play()
     end
 end
 
@@ -128,6 +130,7 @@ function Grid:flagTile()
                 end
             end
         end
+        gSounds['flag']:play()
     end
 end
 

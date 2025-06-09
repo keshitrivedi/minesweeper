@@ -43,6 +43,13 @@ end
 function Tile:update(dt)
     -- self:revealTile()
     self.mouseActive = self:contains(MOUSEX, MOUSEY)
+
+    if self.mouseActive and not self.wasMouseActive then
+        gSounds['hover']:stop()
+        gSounds['hover']:play()
+    end
+
+    self.wasMouseActive = self.mouseActive
 end
 
 function Tile:render()
