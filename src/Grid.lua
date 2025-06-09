@@ -69,18 +69,82 @@ function Grid:NeighbouringTreasure()
     end
 end
 
+function Grid:uhoh()
+    for i = 1, self.cols do
+        for j = 1, self.rows do
+            self.tiles[i][j].revealed = true
+        end
+    end
+end
+
+function Grid:revealTile()
+    local clickL = love.mouse.wasPressed(1)
+    if clickL then
+        for i = 1, self.cols do
+            for j = 1, self.rows do
+                if self.tiles[i][j]:contains(clickL.x, clickL.y) then
+                    if not self.tiles[i][j].treasure then
+                        self:floodFill(i, j)
+                    else
+                        self.tiles[i][j].revealed = true
+                    end
+
+                    if self.tiles[i][j].treasure then
+                        self:uhoh()
+                    end
+                end
+            end
+        end
+    end
+end
+
+function Grid:floodFill(i, j)
+    local tile = self.tiles[i][j]
+    if tile.revealed or tile.treasure then
+        return
+    end
+    tile.revealed = true
+
+    if tile.neighbouringTreasure == 0 then
+        for k = -1, 1 do
+            for l = -1, 1 do
+                local ni = i + k
+                local nj = j + l
+                if (not (k == 0 and l == 0)) and ni >= 1 and ni <= self.cols and nj >= 1 and nj <= self.rows then
+                    self:floodFill(ni, nj)
+                end
+            end
+        end
+    end
+end
+
+function Grid:flagTile()
+    local clickR = love.mouse.wasPressed(2)
+    if clickR then
+        for i = 1, self.cols do
+            for j = 1, self.rows do
+                if self.tiles[i][j]:contains(clickR.x, clickR.y) then
+                    self.tiles[i][j].flagged = not self.tiles[i][j].flagged
+                end
+            end
+        end
+    end
+end
+
 function Grid:update(dt)
     for i = 1, self.cols do
         for j = 1, self.rows do
             self.tiles[i][j]:update(dt)
         end
     end
+    self:revealTile()
+    self:flagTile()
 end
 
 function Grid:render()
-    for y = 1, self.cols do
-        for x = 1, self.rows do
-            self.tiles[y][x]:render()
+    for i = 1, self.cols do
+        for j = 1, self.rows do
+            self.tiles[i][j]:render()
         end
     end
 end

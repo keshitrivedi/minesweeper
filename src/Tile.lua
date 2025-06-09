@@ -17,6 +17,8 @@ function Tile:init(i, j, w)
     self.revealed = false
     self.treasure = false
 
+    self.flagged = false
+
     -- self.totalTreasure = 0
     -- if math.random(6) == 1 then
     --     self.treasure = true
@@ -31,20 +33,24 @@ function Tile:contains(x, y)
     return (x > self.x and x < self.x + self.w and y > self.y and y < self.y + self.w)
 end
 
-function Tile:revealTile()
-    local click = love.mouse.wasPressed(1)
-    if click and self:contains(click.x, click.y) then
-        self.revealed = true
-    end
-end
+-- function Tile:revealTile()
+--     local click = love.mouse.wasPressed(1)
+--     if click and self:contains(click.x, click.y) then
+--         self.revealed = true
+--     end
+-- end
 
 function Tile:update(dt)
-    self:revealTile()
+    -- self:revealTile()
     self.mouseActive = self:contains(MOUSEX, MOUSEY)
 end
 
 function Tile:render()
     love.graphics.setColor(1 ,1, 1)
+
+    if self.flagged and self.revealed == false then
+        love.graphics.setColor(1, 0, 0, 1)
+    end
 
     if self.revealed then
         if self.treasure then
