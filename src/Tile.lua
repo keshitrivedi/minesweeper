@@ -17,9 +17,14 @@ function Tile:init(i, j, w)
     self.revealed = false
     self.treasure = false
 
+    self.totalTreasure = 0
     if math.random(6) == 1 then
         self.treasure = true
+        self.totalTreasure = self.totalTreasure + 1
     end
+
+    self.mouseActive = false
+    self.neighbouringTreasure = 0
 end
 
 function Tile:contains(x, y)
@@ -35,6 +40,7 @@ end
 
 function Tile:update(dt)
     self:revealTile()
+    self.mouseActive = self:contains(MOUSEX, MOUSEY)
 end
 
 function Tile:render()
@@ -42,10 +48,19 @@ function Tile:render()
 
     if self.revealed then
         if self.treasure then
-            love.graphics.setColor(1, 1, 0)
+            love.graphics.setColor(1, 1, 0, 1)
         else
-            love.graphics.setColor(0, 1, 0)
+            love.graphics.setColor(0, 1, 0, 1)
         end
     end
     love.graphics.rectangle('fill', self.x, self.y, self.w, self.w)
+    if self.revealed and (not self.treasure) then
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.printf(tostring(self.neighbouringTreasure), self.x, self.y, VIRTUAL_WIDTH)
+    end
+
+    if self.mouseActive then
+        love.graphics.setColor(0, 0, 0 ,1)
+        love.graphics.rectangle('line', self.x - 0.5, self.y - 0.5, self.w, self.w)
+    end
 end

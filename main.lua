@@ -50,6 +50,9 @@ function love.mouse.wasPressed(button)
 end
 
 function love.update(dt)
+    local x, y = love.mouse.getPosition()
+    MOUSEX, MOUSEY = push:toGame(x, y)
+
     gStateMachine:update(dt)
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
