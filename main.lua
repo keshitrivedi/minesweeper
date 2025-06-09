@@ -7,6 +7,9 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 512
 VIRTUAL_HEIGHT = 288
 
+villagers = love.graphics.newImage('graphics/villagers.png')
+villagersQuads = GenerateQuads(villagers, 15, 15)
+
 function love.load()
     math.randomseed(os.time())
 
@@ -26,7 +29,8 @@ function love.load()
         ['hover'] = love.audio.newSource('sounds/hover.mp3', 'static'),
         ['assign'] = love.audio.newSource('sounds/assign.mp3', 'static'),
         ['flag'] = love.audio.newSource('sounds/flag.mp3', 'static'),
-        ['treasure'] = love.audio.newSource('sounds/treasure.mp3', 'static')
+        ['treasure'] = love.audio.newSource('sounds/treasure.mp3', 'static'),
+        ['yay'] = love.audio.newSource('sounds/yay.mp3', 'static')
     }
 
     love.keyboard.keysPressed = {}

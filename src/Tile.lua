@@ -27,6 +27,13 @@ function Tile:init(i, j, w)
 
     self.mouseActive = false
     self.neighbouringTreasure = 0
+
+    self.ground = love.graphics.newImage('graphics/groundtile.png')
+    self.empty = love.graphics.newImage('graphics/empty.png')
+    -- self.villagers = love.graphics.newImage('graphics/villagers.png')
+    -- self.villagersQuads = GenerateQuads(self.villagers, 15, 15)
+    self.flag = love.graphics.newImage('graphics/flag.png')
+    self.mine = love.graphics.newImage('graphics/mine.png')
 end
 
 function Tile:contains(x, y)
@@ -55,25 +62,31 @@ end
 function Tile:render()
     love.graphics.setColor(1 ,1, 1)
 
-    if self.flagged and self.revealed == false then
-        love.graphics.setColor(1, 0, 0, 1)
-    end
-
     if self.revealed then
         if self.treasure then
-            love.graphics.setColor(1, 1, 0, 1)
-        else
-            love.graphics.setColor(0, 1, 0, 1)
+            -- love.graphics.setColor(1, 1, 0, 1)
+            -- love.graphics.rectangle('fill', self.x, self.y, self.w, self.w)
+            love.graphics.draw(self.mine, self.x, self.y)
+        elseif self.neighbouringTreasure == 0 then
+            love.graphics.draw(self.empty, self.x, self.y)
+        elseif self.neighbouringTreasure > 0 then
+            love.graphics.draw(villagers, villagersQuads[self.neighbouringTreasure], self.x, self.y)
         end
+    else
+        love.graphics.draw(self.ground, self.x, self.y)
     end
-    love.graphics.rectangle('fill', self.x, self.y, self.w, self.w)
-    if self.revealed and (not self.treasure) and self.neighbouringTreasure > 0 then
-        love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.printf(tostring(self.neighbouringTreasure), self.x, self.y, VIRTUAL_WIDTH)
-    end
+    -- if self.revealed and (not self.treasure) and self.neighbouringTreasure > 0 then
+    --     love.graphics.setColor(1, 1, 1, 1)
+    --     love.graphics.printf(tostring(self.neighbouringTreasure), self.x, self.y, VIRTUAL_WIDTH)
+    -- end
 
     if self.mouseActive then
         love.graphics.setColor(0, 0, 0 ,1)
         love.graphics.rectangle('line', self.x - 0.5, self.y - 0.5, self.w, self.w)
+    end
+
+    if self.flagged and self.revealed == false then
+        -- love.graphics.setColor(1, 0, 0, 1)
+        love.graphics.draw(self.flag, self.x, self.y)
     end
 end

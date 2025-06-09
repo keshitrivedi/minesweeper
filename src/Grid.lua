@@ -83,7 +83,7 @@ function Grid:revealTile()
     if clickL then
         for i = 1, self.cols do
             for j = 1, self.rows do
-                if self.tiles[i][j]:contains(clickL.x, clickL.y) then
+                if self.tiles[i][j]:contains(clickL.x, clickL.y) and (not self.tiles[i][j].flagged) then
                     if not self.tiles[i][j].treasure then
                         self:floodFill(i, j)
                     else
@@ -125,7 +125,7 @@ function Grid:flagTile()
     if clickR then
         for i = 1, self.cols do
             for j = 1, self.rows do
-                if self.tiles[i][j]:contains(clickR.x, clickR.y) then
+                if self.tiles[i][j]:contains(clickR.x, clickR.y) and self.tiles[i][j].revealed == false  then
                     self.tiles[i][j].flagged = not self.tiles[i][j].flagged
                 end
             end
