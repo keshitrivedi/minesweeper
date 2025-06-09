@@ -17,11 +17,11 @@ function Tile:init(i, j, w)
     self.revealed = false
     self.treasure = false
 
-    self.totalTreasure = 0
-    if math.random(6) == 1 then
-        self.treasure = true
-        self.totalTreasure = self.totalTreasure + 1
-    end
+    -- self.totalTreasure = 0
+    -- if math.random(6) == 1 then
+    --     self.treasure = true
+    --     self.totalTreasure = self.totalTreasure + 1
+    -- end
 
     self.mouseActive = false
     self.neighbouringTreasure = 0

@@ -4,7 +4,10 @@ function Grid:init(cols, rows)
     self.cols = cols
     self.rows = rows
 
+    self.totalTreasure = 40
+
     self:makeGrid(self.cols, self.rows)
+    self:assignTreasure()
     self:NeighbouringTreasure()
 end
 
@@ -14,6 +17,28 @@ function Grid:makeGrid(cols, rows)
         table.insert(self.tiles, {})
         for j = 1, rows do
             table.insert(self.tiles[i], Tile(j, i, 15))
+        end
+    end
+end
+
+function Grid:assignTreasure()
+    local assigned = {}
+
+    while #assigned < 40 do
+        local i = math.random(self.cols)
+        local j = math.random(self.rows)
+
+        local isTreasure = false
+
+        for n = 1, #assigned do
+            if assigned[n].x == i and assigned[n].y == j then
+                isTreasure = true
+            end
+        end
+
+        if not isTreasure then
+            table.insert(assigned, {x = i, y = j})
+            self.tiles[i][j].treasure = true
         end
     end
 end
