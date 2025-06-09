@@ -54,7 +54,7 @@ function Tile:render()
         end
     end
     love.graphics.rectangle('fill', self.x, self.y, self.w, self.w)
-    if self.revealed and (not self.treasure) then
+    if self.revealed and (not self.treasure) and self.neighbouringTreasure > 0 then
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.printf(tostring(self.neighbouringTreasure), self.x, self.y, VIRTUAL_WIDTH)
     end

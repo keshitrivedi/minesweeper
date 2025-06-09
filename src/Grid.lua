@@ -24,7 +24,7 @@ end
 function Grid:assignTreasure()
     local assigned = {}
 
-    while #assigned < 40 do
+    while #assigned < self.totalTreasure do
         local i = math.random(self.cols)
         local j = math.random(self.rows)
 
