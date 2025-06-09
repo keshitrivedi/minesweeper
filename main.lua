@@ -13,6 +13,8 @@ villagersQuads = GenerateQuads(villagers, 15, 15)
 function love.load()
     math.randomseed(os.time())
 
+    love.window.setTitle('minesweeperr')
+
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,
         fullscreen = false,
