@@ -17,9 +17,13 @@ function love.load()
         canvas = true
     })
 
-    --gStateMachine = StateMachine {}
+    gStateMachine = StateMachine {
+        ['play'] = function() return PlayState() end
+    }
+    gStateMachine:change('play')
 
     love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 function love.resize(w, h)
@@ -30,17 +34,29 @@ function love.keypressed(key)
     love.keyboard.keysPressed[key] = true
 end
 
+function love.mousepressed(x, y, button)
+    local mx, my = push:toGame(x, y)
+    if mx and my then
+        love.mouse.buttonsPressed[button] = {x = mx, y = my}
+    end
+end
+
 function love.keyboard.wasPressed(key)
     return love.keyboard.keysPressed[key]
 end
 
+function love.mouse.wasPressed(button)
+    return love.mouse.buttonsPressed[button]
+end
+
 function love.update(dt)
-    --gStateMachine:update(dt)
+    gStateMachine:update(dt)
     love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 function love.draw()
     push:start()
-    --gStateMachine:render()
+    gStateMachine:render()
     push:finish()
 end
