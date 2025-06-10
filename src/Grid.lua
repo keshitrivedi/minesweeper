@@ -1,10 +1,12 @@
 Grid = Class{}
 
-function Grid:init(cols, rows)
+function Grid:init(cols, rows, minecount)
     self.cols = cols
     self.rows = rows
 
-    self.totalTreasure = 40
+    self.totalTreasure = minecount or 14
+
+    self.mineClicked = false
 
     self:makeGrid(self.cols, self.rows)
     self:assignTreasure()
@@ -91,8 +93,10 @@ function Grid:revealTile()
                     end
 
                     if self.tiles[i][j].treasure then
+                        self.mineClicked = true
                         self:uhoh()
                     end
+
                 end
             end
         end
